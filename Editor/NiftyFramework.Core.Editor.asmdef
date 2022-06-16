@@ -1,0 +1,18 @@
+{
+    "name": "NiftyFramework.Editor",
+    "rootNamespace": "NiftyFramework",
+    "references": [
+        "GUID:8101e47628147464e8b685173d3b3053",
+        "GUID:ba7f78e058b1ed141863492adbfe0924",
+        "GUID:bee76f66f6d365344acf235a1932fd27"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

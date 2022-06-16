@@ -1,0 +1,16 @@
+{
+  "name": "com.niftyhat.niftycore",
+  "version": "0.0.1",
+  "displayName": "Nifty Core",
+  "description": "Core Package for the Nifty Framework",
+  "keywords": [
+    "Nifty",
+    "NiftyCore",
+    "Core"
+  ],
+  "author": {
+    "name": "Duncan Saunders",
+    "email": "duncan@niftyhat.com",
+    "url": "https://www.niftyhat.com"
+  }
+}
