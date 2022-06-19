@@ -33,12 +33,15 @@ namespace NiftyFramework.Core.Data
             return false;
         }
         
-        public void TrySet(ref TValue output)
+        public bool ApplyValue(out TValue output, TValue fallback)
         {
             if (_enabled)
             {
                 output = _value;
+                return true;
             }
+            output = fallback;
+            return false;
         }
     }
 
