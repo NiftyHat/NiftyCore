@@ -1,8 +1,22 @@
+
 namespace NiftyFramework.Core.Condition
 {
-    public class StatefulConditionSet : StatefulCondition
+
+    public class StatefulConditionSet : StatefulConditionSet<StatefulCondition>
     {
-        private StatefulCondition[] _conditions;
+        public StatefulConditionSet(StatefulCondition[] conditions, Mode mode) : base(conditions, mode)
+        {
+        }
+
+        public StatefulConditionSet(StatefulCondition condition, Mode mode) : base(condition, mode)
+        {
+        }
+    }
+    
+
+    public class StatefulConditionSet<TCondition> : StatefulCondition where TCondition : StatefulCondition
+    { 
+        private TCondition[] _conditions;
         private Mode _mode;
 
         public enum Mode
@@ -10,8 +24,8 @@ namespace NiftyFramework.Core.Condition
             Any,
             All
         }
-        
-        public StatefulConditionSet(StatefulCondition[] conditions, Mode mode)
+
+        public StatefulConditionSet(TCondition[] conditions, Mode mode)
         {
             _conditions = conditions;
             foreach (var item in conditions)
@@ -21,7 +35,7 @@ namespace NiftyFramework.Core.Condition
             _mode = mode;
         }
         
-        public StatefulConditionSet(StatefulCondition condition, Mode mode)
+        public StatefulConditionSet(TCondition condition, Mode mode)
         {
             _conditions = new[] { condition };
             foreach (var item in _conditions)
