@@ -1,4 +1,4 @@
-namespace ViewData
+namespace NiftyFramework.UI
 {
     public interface IView
     {

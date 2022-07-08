@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
+using NiftyFramework.UI;
 using UnityEngine;
-using ViewData;
 
 namespace UnityUtils
 {

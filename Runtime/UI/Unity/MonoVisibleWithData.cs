@@ -1,6 +1,5 @@
 using NiftyFramework.Core.Data;
 using UnityEngine;
-using ViewData;
 
 namespace NiftyFramework.UI.Unity
 {
