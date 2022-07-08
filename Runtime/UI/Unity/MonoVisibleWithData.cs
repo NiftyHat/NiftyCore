@@ -7,16 +7,16 @@ namespace NiftyFramework.UI.Unity
     {
         private bool? _defaultActiveState;
         
-        public void Set(IOptional data)
+        public void Set(IOptional viewData)
         {
             _defaultActiveState ??= gameObject.activeInHierarchy;
-            gameObject.SetActive(data.Enabled);
+            gameObject.SetActive(viewData.Enabled);
         }
 
-        public void Set(object data)
+        public void Set(object viewData)
         {
             _defaultActiveState ??= gameObject.activeInHierarchy;
-            gameObject.SetActive(data != null);
+            gameObject.SetActive(viewData != null);
         }
 
         public void Clear()
