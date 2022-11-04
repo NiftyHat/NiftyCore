@@ -20,25 +20,36 @@ namespace UnityUtils
 
         private List<PoolItem> _pooledItems = new List<PoolItem>();
         private DelegateFactory _factory;
+        private int _maxSize;
 
         /// <summary>
         /// Creates a pool using the initial item. 
         /// </summary>
-        /// <param name="initialItem"></param>
-        public MonoPool(TMonoBehavior initialItem)
+        /// <param name="initialItem">Prototype item. Used as a factory for other items</param>
+        /// <param name="maxSize">Max size for the pool</param>
+        public MonoPool(TMonoBehavior initialItem, int maxSize = -1)
         {
             if (initialItem != null && initialItem.gameObject != null)
             {
                 var parent = initialItem.gameObject.transform.parent;
                 initialItem.gameObject.SetActive(false);
-                _factory = () => GameObject.Instantiate(initialItem.gameObject, parent).GetComponent<TMonoBehavior>();
+                _factory = () => UnityEngine.Object.Instantiate(initialItem.gameObject, parent).GetComponent<TMonoBehavior>();
+            }
+
+            if (maxSize > _maxSize)
+            {
+                _maxSize = maxSize;
             }
         }
         
-        public MonoPool(DelegateFactory factory)
+        public MonoPool(DelegateFactory factory, int maxSize = -1)
         {
             _pooledItems = new List<PoolItem>();
             _factory = factory;
+            if (maxSize > _maxSize)
+            {
+                _maxSize = maxSize;
+            }
         }
 
         public bool TryGet(out TMonoBehavior instance)
@@ -51,33 +62,36 @@ namespace UnityUtils
                     throw new NullReferenceException(
                         $"{nameof(MonoPool<TMonoBehavior>)} {nameof(TryGet)}() factory method {_factory.Method.Name} return null GameObject ref");
                 }
-                _pooledItems.Add(new PoolItem
-                {
-                    Object = instance.gameObject,
-                    MonoBehavior = instance
-                });
+                return instance;
             }
             int lastIndex = _pooledItems.Count - 1;
             PoolItem item =  _pooledItems[lastIndex];
+            _pooledItems.RemoveAt(lastIndex);
             instance = item.MonoBehavior;
             item.Object.SetActive(true);
-            _pooledItems.RemoveAt(lastIndex);
             return item.Object != null && item.MonoBehavior != null;
         }
 
-        public void TryReturn(TMonoBehavior instance)
+        public bool TryReturn(TMonoBehavior instance)
         {
-            PoolItem poolItem = new PoolItem
+            if (_pooledItems.Count < _maxSize)
             {
-                Object = instance.gameObject,
-                MonoBehavior = instance,
-                View = instance as IView
-            };
-            poolItem.View?.Clear();
-            poolItem.Object.SetActive(false);
-            _pooledItems.Add(poolItem);
+                PoolItem poolItem = new PoolItem
+                {
+                    Object = instance.gameObject,
+                    MonoBehavior = instance,
+                    View = instance as IView
+                };
+                poolItem.View?.Clear();
+                poolItem.Object.SetActive(false);
+                _pooledItems.Add(poolItem);
+                return true;
+            }
+            UnityEngine.Object.Destroy(instance.gameObject);
+            return false;
         }
 
+        [Obsolete("Don't use this until a proper Clear and Release function exists")]
         public void Clear()
         {
             foreach (var item in _pooledItems)
