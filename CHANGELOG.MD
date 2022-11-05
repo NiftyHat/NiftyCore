@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.2] - 2022-11-04
+
+### Changed
+- Changed a bunch of stuff in amsdef files to try and fix compiling issues when added to any project other than the test one.
+
 ## [0.1.1] - 2022-11-04
 
 ### Changed
