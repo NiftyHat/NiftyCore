@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace NiftyFramework.UnityUtils
+namespace UnityUtils
 {
     public static class GameObjectExtensions
     {
@@ -8,6 +8,26 @@ namespace NiftyFramework.UnityUtils
         {
             component = gameObject.GetComponent<TComponent>();
             return component != null;
+        }
+
+        public static bool TrySetActive(this GameObject gameObject, bool isActive)
+        {
+            if (gameObject != null)
+            {
+                gameObject.SetActive(isActive);
+                return true;
+            }
+            return false;
+        }
+        
+        public static bool TrySetActive(this MonoBehaviour component, bool isActive)
+        {
+            if (component != null && component.gameObject != null)
+            {
+                component.gameObject.SetActive(isActive);
+                return true;
+            }
+            return false;
         }
     }
 }
