@@ -47,6 +47,6 @@ namespace NiftyFramework.Core.Data
 
     public interface IOptional
     {
-        public bool Enabled { get; }
+        bool Enabled { get; }
     }
 }
