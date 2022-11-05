@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.1] - 2022-11-04
+
+### Changed
+- Changed some root namespace stuff to try and appease unity compiling the amsdef when the the library is added to projects
+
 ## [0.1.0] - 2022-11-04
 ### Added
 - Tests for MonoPool MonoPoolFactoryTests and MonoPoolPrototypeTests
@@ -16,7 +21,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Complete re-write on how MonoPool works to try and make it more robust against null ref exceptions on GameObjects purged by it.
-
-
-### Removed
-

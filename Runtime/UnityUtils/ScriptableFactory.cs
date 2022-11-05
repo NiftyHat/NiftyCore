@@ -1,7 +1,6 @@
 using UnityEngine;
-using UnityUtils;
 
-namespace Timeline.Data
+namespace UnityUtils
 {
     public abstract class ScriptableFactory<TImplementation> : ScriptableObject, IFactory<TImplementation> where TImplementation : new()
     {

@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using NiftyFramework.UI;
 using UnityEngine;
+using UnityUtils;
 
-namespace UnityUtils
+namespace NiftyFramework.UnityUtils
 {
     public class MonoPool<TMonoBehavior> where TMonoBehavior : MonoBehaviour
     {

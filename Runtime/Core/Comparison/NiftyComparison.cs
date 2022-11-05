@@ -25,7 +25,7 @@ namespace NiftyFramework.Core
                 case "!=":
                     return NotEqual;
                 case ">":
-                    return Greater;;
+                    return Greater;
                 case ">=":
                     return GreaterOrEqual;
                 case "<":
@@ -41,7 +41,7 @@ namespace NiftyFramework.Core
     public interface IComparison<TValue> where TValue : IComparable<TValue>
     {
         bool Compare(TValue left, TValue right);
-        public string Symbol { get; }
+        string Symbol { get; }
     }
     
     public struct Equal<TValue> : IComparison<TValue> where TValue :  IComparable<TValue>

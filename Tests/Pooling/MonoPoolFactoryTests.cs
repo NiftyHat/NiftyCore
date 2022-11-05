@@ -1,12 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using NiftyFramework.UnityUtils;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
-using UnityUtils;
 
-namespace Tests.Pooling
+namespace NiftyFramework.Tests.Pooling
 {
     public class MonoPoolFactoryTests
     {

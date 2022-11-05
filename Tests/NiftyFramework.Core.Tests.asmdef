@@ -1,10 +1,10 @@
 {
-    "name": "NewAssembly",
+    "name": "NiftyFramework.Core.Tests",
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "NiftyFramework.Runtime",
-        "NiftyFramework.Editor"
+        "NiftyFramework.Editor",
+        "NiftyFramework.Core"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
