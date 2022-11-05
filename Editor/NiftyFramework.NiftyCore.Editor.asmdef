@@ -1,0 +1,15 @@
+{
+    "name": "NiftyFramework.NiftyCore.Editor",
+    "references": [
+        "NiftyFramework.NiftyCore",
+        "NiftyScriptableSet.Runtime",
+        "NiftyScriptableSet.Editor"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "autoReferenced": false,
+    "versionDefines": [],
+    "noEngineReferences": false
+}
