@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.3] - 2022-11-04
+
+### Changed
+- Fixed comparison when setting Range.Max test so it doesn't break.
+
 ## [0.1.2] - 2022-11-04
 
 ### Changed

@@ -25,7 +25,7 @@ namespace NiftyFramework.Core
             get => _max;
             set
             {
-                if (_max.CompareTo(_min) > 0)
+                if (_min.CompareTo(_max) > 0)
                 {
                     throw new Exception($"[{GetType().Name}] {_min} cannot be greater than {_max}");
                 }
