@@ -1,5 +1,6 @@
 using System;
 using NiftyFramework.Core.Condition;
+using UnityEngine;
 
 namespace NiftyFramework.Core
 {
@@ -44,7 +45,7 @@ namespace NiftyFramework.Core
         {
             if (OnChanged == null && OnUpdated == null)
             {
-                return _value;
+                Debug.LogWarning($"{nameof(ValueProvider<TValue>)}.{nameof(Set)}() called but no watcher assigned. You could use an int instead");
             }
 
             if (newValue.Equals(_value))

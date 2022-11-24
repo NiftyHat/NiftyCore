@@ -6,7 +6,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace NiftyFramework.Tests.Pooling
+namespace Tests.Pooling
 {
     public class MonoPoolFactoryTests
     {

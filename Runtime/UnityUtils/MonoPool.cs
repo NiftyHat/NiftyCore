@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using NiftyFramework.UI;
 using UnityEngine;
 using UnityUtils;
@@ -15,33 +16,16 @@ namespace NiftyFramework.UnityUtils
         private readonly int _maxSize = int.MaxValue;
         private TMonoBehavior _first;
         public int Count => _pooledItems.Count;
+        public int MaxSize => _maxSize;
         
-        private MonoPool(int maxSize = 0)
-        {
-            if (maxSize >= 1)
-            {
-                _maxSize = maxSize;
-            }
-        }
         
-        private MonoPool(int maxSize = -1, int initialSize = -1) : this(maxSize)
-        {
-            if (initialSize > 0)
-            {
-                if (initialSize > maxSize)
-                {
-                    Debug.LogWarning($"{nameof(initialSize)} {initialSize} has clamped to {nameof(maxSize)} of {maxSize}");
-                }
-            }
-        }
-
         /// <summary>
         /// Creates a pool using the initial item. 
         /// </summary>
         /// <param name="initialItem">Prototype item. Used as a factory for other items</param>
         /// <param name="maxSize">Max size for the pool</param>
         /// <param name="initialSize">Initial size for the pool. Allocates items using Prewarm</param>
-        public MonoPool(TMonoBehavior initialItem, int maxSize = -1, int initialSize = -1) : this(maxSize, initialSize)
+        public MonoPool(TMonoBehavior initialItem, int maxSize = -1, int initialSize = -1)
         {
             if (initialItem != null && initialItem.gameObject != null)
             {
@@ -49,7 +33,53 @@ namespace NiftyFramework.UnityUtils
                 initialItem.gameObject.SetActive(false);
                 _instanceFunction = () => UnityEngine.Object.Instantiate(initialItem.gameObject, parent).GetComponent<TMonoBehavior>();
             }
+            if (maxSize >= 1)
+            {
+                _maxSize = maxSize;
+                if (initialSize > _maxSize)
+                {
+                    Debug.LogWarning($"{nameof(MonoPool<TMonoBehavior>)}{nameof(initialSize)} of {initialSize} was that {nameof(_maxSize)} and has been clamped to {_maxSize} ");
+                    initialSize = _maxSize;
+                }
+            }
             Prewarm(initialSize);
+        }
+
+        /// <summary>
+        /// Creates a pool using the initial item. 
+        /// </summary>
+        /// <param name="initialItems"></param>
+        /// <param name="maxSize">Max size for the pool</param>
+        public MonoPool(IList<TMonoBehavior> initialItems, int maxSize = -1)
+        {
+            if (initialItems == null)
+            {
+                Debug.LogError($"{nameof(MonoPool<TMonoBehavior>)}{nameof(initialItems)} was null");
+                return;
+            }
+
+            if (initialItems.Count == 0)
+            {
+                Debug.LogError($"{nameof(MonoPool<TMonoBehavior>)}{nameof(initialItems)} was 0 length");
+                return;
+            }
+            var prototype = initialItems.FirstOrDefault();
+            if (prototype != null && prototype.gameObject != null)
+            {
+                var parent = prototype.gameObject.transform.parent;
+                prototype.gameObject.SetActive(false);
+                _instanceFunction = () => UnityEngine.Object.Instantiate(prototype.gameObject, parent).GetComponent<TMonoBehavior>();
+            }
+            if (maxSize >= 1)
+            {
+                _maxSize = maxSize;
+            }
+            if (_maxSize < initialItems.Count)
+            {
+                Debug.LogWarning($"{nameof(MonoPool<TMonoBehavior>)}{nameof(_maxSize)} was smaller than {nameof(initialItems)}.Count and has been increased to {initialItems.Count}");
+                _maxSize = initialItems.Count;
+            }
+            Prewarm(initialItems);
         }
         
         /// <summary>
@@ -58,11 +88,11 @@ namespace NiftyFramework.UnityUtils
         /// <param name="instanceFunction">Factory the creates new pool items</param>
         /// <param name="maxSize">Maximum pool size. If Count is greater than Size objects cannot be sent to the pool</param>
         /// <param name="initialSize">Initial size of the pool. Invokes Prewarm that will create the objects</param>
-        public MonoPool(MonoBehaviorInstanced instanceFunction, int maxSize = -1, int initialSize = -1) : this(maxSize, initialSize)
+        public MonoPool(MonoBehaviorInstanced instanceFunction, int maxSize = -1, int initialSize = -1)
         {
             _pooledItems = new HashSet<TMonoBehavior>();
             _instanceFunction = instanceFunction;
-            if (maxSize > _maxSize)
+            if (maxSize >= 1)
             {
                 _maxSize = maxSize;
             }
@@ -71,9 +101,36 @@ namespace NiftyFramework.UnityUtils
 
         private void Prewarm(int itemCount)
         {
+            if (itemCount > _maxSize)
+            {
+                Debug.LogWarning($"{nameof(itemCount)}{nameof(Prewarm)}() {nameof(itemCount)} {itemCount} greater than {nameof(_maxSize)} and has been clamped to {_maxSize}");
+                itemCount = _maxSize;
+            }
             for (int i = 0; i < itemCount && i < _maxSize; i++)
             {
                 var instance = _instanceFunction();
+                if (instance is IView view)
+                {
+                    view.Clear();
+                }
+                if (instance.gameObject != null)
+                {
+                    instance.gameObject.SetActive(false);
+                }
+                _pooledItems.Add(instance);
+            }
+            _first = GetHead();
+        }
+        
+        private void Prewarm(IEnumerable<TMonoBehavior> items)
+        {
+            foreach (var instance in items)
+            {
+                if (instance == null)
+                {
+                    Debug.LogError($"{nameof(MonoPool<TMonoBehavior>)}.{nameof(Prewarm)}() skipped item due to null reference");
+                    continue;
+                }
                 if (instance is IView view)
                 {
                     view.Clear();

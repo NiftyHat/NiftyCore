@@ -6,7 +6,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace NiftyFramework.Tests.Pooling
+namespace Tests.Pooling
 {
     public class MonoPoolProtoypeTest
     {
@@ -23,12 +23,13 @@ namespace NiftyFramework.Tests.Pooling
             var comp = prototypeObject.AddComponent<TestView>();
             return comp;
         }
-
+        
         private static MonoPool<TestView> GetPrototypeMonoPool(int maxSize = -1, int initialCount = -1)
         {
             TestView prototype = GetPrototype();
             return new MonoPool<TestView>(prototype, maxSize, initialCount);
         }
+
         
         [Test]
         public static void Get_Prototype_IsAllocated()
@@ -46,6 +47,7 @@ namespace NiftyFramework.Tests.Pooling
             Assert.LessOrEqual(pool.Count, maxSize);
         }
         
+
         [TestCase(1)]
         [TestCase(5)]
         [TestCase(100)]
@@ -59,7 +61,7 @@ namespace NiftyFramework.Tests.Pooling
         [TestCase(1)]
         [TestCase(5)]
         [TestCase(100)]
-        public static void Get_Should_ReturnUniqueInstances(int size = -1)
+        public static void Get_ItemShould_ReturnUniqueInstances(int size = -1)
         {
             MonoPool<TestView> pool = GetPrototypeMonoPool(-1, size);
             HashSet<TestView> allInstanced = new HashSet<TestView>();
