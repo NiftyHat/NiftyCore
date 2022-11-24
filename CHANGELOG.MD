@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.4] - 2022-11-23
+
+### Changed
+- Changing an unobserved ValueProvider no longer blocked updates to that provider (it does print a warning though).
+
+### Added
+- MonoPool initialization from a List or Array
+
+
 ## [0.1.3] - 2022-11-04
 
 ### Changed
