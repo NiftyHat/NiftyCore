@@ -66,6 +66,10 @@ namespace NiftyFramework.Core
                 OnChanged?.Invoke(newValue, lastValue);
                 _value = newValue;
             }
+            else
+            {
+                _value = newValue;
+            }
             return _value;
         }
 
