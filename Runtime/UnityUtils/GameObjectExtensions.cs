@@ -29,5 +29,15 @@ namespace UnityUtils
             }
             return false;
         }
+        
+        public static bool TrySetActive(this Behaviour behaviour, bool isActive)
+        {
+            if (behaviour != null && behaviour.gameObject != null)
+            {
+                behaviour.gameObject.SetActive(isActive);
+                return true;
+            }
+            return false;
+        }
     }
 }
