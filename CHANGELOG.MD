@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.7] - 2022-12-07
+
+### Changed
+- Moved some filed in Editor subfolders into the editor amsdef folder
+
 ## [0.1.6] - 2022-12-02
 
 ### Added

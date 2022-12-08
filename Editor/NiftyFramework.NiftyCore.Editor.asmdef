@@ -5,11 +5,15 @@
         "NiftyScriptableSet.Runtime",
         "NiftyScriptableSet.Editor"
     ],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": true,
+    "precompiledReferences": [],
     "autoReferenced": false,
+    "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false
 }

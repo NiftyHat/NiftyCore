@@ -30,14 +30,14 @@ namespace NiftyFramework.Core.Assets
             {
                 string assetPath = AssetDatabase.GetAssetPath(this);
                 _directory = Path.GetDirectoryName(assetPath);
+                
             }
-            
-            #endif
             if (!string.IsNullOrEmpty(_directory))
             {
                 UpdateReferences();
             }
-           
+            #endif
+            
         }
 
         public bool TryGet<TAsset>(out TAsset asset)
@@ -75,12 +75,11 @@ namespace NiftyFramework.Core.Assets
             return false;
         }
 
+        #if UNITY_EDITOR
         [ContextMenu("UpdateReferences")]
         public void UpdateReferences()
         {
             List<TBaseType> newAssets = new List<TBaseType>();
-            string assetPath = AssetDatabase.GetAssetPath(this);
-            _directory = Path.GetDirectoryName(assetPath);
             string[] assetGuids = AssetDatabase.FindAssets("t:ScriptableObject", new[] { _directory });
             foreach (string guid in assetGuids)
             {
@@ -98,6 +97,7 @@ namespace NiftyFramework.Core.Assets
             _references = newAssets.ToArray();
             CacheMap();
         }
+        #endif
 
         protected void CacheMap()
         {
