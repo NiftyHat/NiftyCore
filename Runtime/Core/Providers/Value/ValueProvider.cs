@@ -6,7 +6,7 @@ namespace NiftyFramework.Core
 {
     public abstract class ValueProvider<TValue> : IValueProvider<TValue> where TValue : IComparable<TValue>
     {
-        public delegate void Changed(TValue oldValue, TValue newValue);
+        public delegate void Changed(TValue newValue, TValue oldValue);
         public delegate void Initialized(TValue initialValue);
 
         public event Changed OnChanged;
@@ -63,8 +63,8 @@ namespace NiftyFramework.Core
             if (OnChanged != null)
             {
                 TValue lastValue = _value;
-                OnChanged?.Invoke(newValue, lastValue);
                 _value = newValue;
+                OnChanged?.Invoke(newValue, lastValue);
             }
             else
             {

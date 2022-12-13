@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.8] - 2022-12-12
+
+### Changed
+- Fixed arg in ValueProvider Changed callback so that newValue is first reflecting how the ValueProvider works.
+
 ## [0.1.7] - 2022-12-07
 
 ### Changed
