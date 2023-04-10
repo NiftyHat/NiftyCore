@@ -22,6 +22,16 @@ namespace NiftyFramework.Core
             set => Set(value);
         }
         
+        protected ValueProvider ()
+        {
+            _isDefault = true;
+        }
+        
+        public ValueProvider (TValue initialValue)
+        {
+            _value = initialValue;
+        }
+        
         public virtual TValue Get(Initialized onInitialized = null, Changed onChanged = null)
         {
             onInitialized?.Invoke(_value);
@@ -73,14 +83,10 @@ namespace NiftyFramework.Core
             return _value;
         }
 
-        protected ValueProvider ()
+        public void ClearListeners()
         {
-            _isDefault = true;
-        }
-        
-        public ValueProvider (TValue initialValue)
-        {
-            _value = initialValue;
+            OnChanged = null;
+            OnUpdated = null;
         }
         
         protected struct AmountCondition : ICondition

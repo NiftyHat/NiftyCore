@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.9] - 2022-12-12
+
+### Added
+- public function ClearListeners in ValueProvider so you can clear all references to ValueProvider callbacks to clear them out of memory.
+
 ## [0.1.8] - 2022-12-12
 
 ### Changed
