@@ -8,6 +8,9 @@
     "NiftyCore",
     "Core"
   ],
+  "dependencies": {
+    "com.unity.addressables": "1.19.19"
+  },
   "author": {
     "name": "Nifty Hat",
     "email": "duncan@niftyhat.com",
